@@ -1,16 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
-import InboxIcon from '@material-ui/icons/Inbox';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import MobileScreenShareIcon from '@material-ui/icons/MobileScreenShare';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Chip from '@material-ui/core/Chip';
 
 import { withStyles } from '@material-ui/core/styles';
 
 import { observer, inject } from 'mobx-react';
-import OperatorsStore from '../../stores/OperatorsStore';
 
 const styles = theme => ({
   progressWrapper: {
@@ -49,6 +51,13 @@ class OperatorsList extends React.Component {
                   <ListItemText 
                     primary={operator.name}
                   />
+                  <ListItemSecondaryAction>
+                    <Chip
+                      label={`Balance: $ ${operator.totalBalance}`}
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </ListItemSecondaryAction>
                 </ListItem>
               );
             })
@@ -68,5 +77,10 @@ class OperatorsList extends React.Component {
     this.props.operators.getOperators();
   }
 }
+
+OperatorsList.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onClickItem: PropTypes.func
+};
 
 export default withStyles(styles)(OperatorsList)

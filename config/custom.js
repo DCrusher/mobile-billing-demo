@@ -22,4 +22,5 @@ module.exports.custom = {
 
   baseUrl: 'http://localhost:1337',
   rememberMeCookieMaxAge: 30*24*60*60*1000, // 30 days
+  superSecretKey: 'shhhhh'
 };

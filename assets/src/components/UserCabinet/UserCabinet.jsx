@@ -1,15 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import StarIcon from '@material-ui/icons/StarBorder';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -69,9 +63,38 @@ const styles = theme => ({
   },
 });
 
-@inject('operators', 'auth')
+@inject('operators', 'auth', 'payments')
 @observer
 class UserCabinet extends React.Component {
+
+  handleLogout = () => {
+    this.props.auth.logout()
+      .then(() => (
+        this.props.history.push('/signin')
+      ));
+  }
+
+  handleItemClick = (operator) => {
+    const { history, operators: operatorsStore } = this.props;
+    
+    operatorsStore.setSelected(operator);
+    history.push(`/refill/${operator.name}`);
+  }
+
+  handleRefill = (payload) => {
+    const { payments, operators } = this.props;
+    
+    return new Promise((resolve, reject) => {
+      payments.makePayment(payload)
+        .then((payment) =>{
+          operators.addPaymentToSelected(payment);
+          resolve(payment);
+        })
+        .catch((error) => {
+          reject(error);
+        }) 
+    });
+  }
 
   render() {
     const { classes } = this.props;
@@ -94,11 +117,7 @@ class UserCabinet extends React.Component {
           </Toolbar>
         </AppBar>
 
-        <main className={classes.layout}>
-          {/* <Typography variant="h6" align="center" color="textSecondary" component="p">
-            To top up the balance, select a mobile operator from the list.
-          </Typography> */}
-          
+        <main className={classes.layout}>         
           <Switch>
             <Route exact path="/" render={() => (
               <OperatorsList
@@ -108,6 +127,7 @@ class UserCabinet extends React.Component {
             <Route path="/refill/:operatorName" render={() => (
               <RefillForm
                 operator={this.props.operators.selected}
+                onRefill={this.handleRefill}
               />
             )} />
           </Switch>
@@ -116,20 +136,6 @@ class UserCabinet extends React.Component {
         </main>
       </React.Fragment>
     );
-  }
-
-  handleLogout = () => {
-    this.props.auth.logout()
-      .then(() => (
-        this.props.history.push('/signin')
-      ));
-  }
-
-  handleItemClick = (operator) => {
-    const { history, operators: operatorsStore } = this.props;
-    
-    operatorsStore.setSelected(operator);
-    history.push(`/refill/${operator.name}`);
   }
 }
 

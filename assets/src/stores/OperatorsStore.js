@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { observable, action } from 'mobx';
+// import stores from './index.js';
+import AuthStore from './AuthStore';
 import keyMirror from 'key-mirror';
-import { isEmpty } from 'lodash';
 
 const STATES = keyMirror({
   init: null,
@@ -9,15 +10,11 @@ const STATES = keyMirror({
   responded: null
 })
 
-export default class OperatorsStore {
+class OperatorsStore {
   @observable list = [];
   @observable errors = [];
   @observable state = STATES.init;
   @observable selected = null;
-
-  constructor() {
-    
-  }
 
   @action
   getOperators() {
@@ -26,8 +23,10 @@ export default class OperatorsStore {
     return new Promise((resolve, reject) => {
       // Artificial delay
       setTimeout(() => {
-        axios
-        .get('http://localhost:1337/api/v1/operators')
+        axios.get(
+          'http://localhost:1337/api/v1/operators',
+          { headers: {'Authorization' : `Bearer ${AuthStore.jwt.token}`} }
+        )
         .then((response) => {
           this.list = response.data;
           this.state = STATES.responded;
@@ -49,8 +48,20 @@ export default class OperatorsStore {
   setSelected(operator) {
     this.selected = operator;
   }
+  
+  @action
+  addPaymentToSelected(payment) {
+    const selectedOperator = this.selected;
+    if (payment.operator === selectedOperator.id) {
+      this.selected = Object.assign(this.selected, {
+        totalBalance: this.selected.totalBalance + payment.amount
+      })
+    }
+  }
 
   isResponded() {
-    return this.state === STATES.responded
+    return this.state === STATES.responded;
   }
 }
+
+export default new OperatorsStore();

@@ -110,14 +110,14 @@ and exposed as \`req.me\`.)`
 
     // Modify the active session instance.
     this.req.session.userId = userRecord.id;
-    
-    sails.log(expire)
 
     this.res.json({
       token: jwt.sign({
         exp: expire,
-        data: userRecord.id
-      }, 'shhhhh'),
+        data: {
+          userId: userRecord.id
+        }
+      }, sails.config.custom.superSecretKey),
       expire
     });
   }

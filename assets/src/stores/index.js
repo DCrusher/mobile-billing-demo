@@ -1,9 +1,11 @@
-import AuthStore from './AuthStore'
-import OperatorsStore from './OperatorsStore'
+import AuthStore from './AuthStore';
+import OperatorsStore from './OperatorsStore';
+import PaymentsStore from './PaymentsStore';
 
 const stores = {
-  auth: new AuthStore(),
-  operators: new OperatorsStore()
-}
+  auth: AuthStore,
+  operators: OperatorsStore,
+  payments: PaymentsStore
+};
 
-export default stores 
+export default stores;

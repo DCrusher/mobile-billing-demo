@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,7 +14,9 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { inject, observer } from 'mobx-react';
+
+import MessageBar from '../MessageBar/MessageBar.jsx';
+import MESSAGE_TYPES from '../../constants/message_types';
 
 const styles = theme => ({
   layout: {
@@ -52,13 +56,21 @@ class SignIn extends React.Component {
   state = {
     emailAddress: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
+    message: {
+      text: '',
+      variant: MESSAGE_TYPES.error
+    }
   }
 
   render() {
     const { classes } = this.props;
-
-    console.log(this.props.auth.errors)
+    const { 
+      emailAddress,
+      password, 
+      message,
+      rememberMe
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -81,7 +93,7 @@ class SignIn extends React.Component {
                   id="emailAddress" 
                   name="emailAddress"
                   autoComplete="emailAddress" 
-                  value={this.state.emailAddress}
+                  value={emailAddress}
                   onChange={this.handleChangeInput}
                   autoFocus 
                 />
@@ -93,7 +105,7 @@ class SignIn extends React.Component {
                   type="password"
                   id="password"
                   autoComplete="current-password"
-                  value={this.state.password}
+                  value={password}
                   onChange={this.handleChangeInput}
                 />
               </FormControl>
@@ -103,7 +115,7 @@ class SignIn extends React.Component {
                     name="rememberMe"
                     color="primary" 
                     value="rememberMe"
-                    checked={this.state.rememberMe}
+                    checked={rememberMe}
                     onChange={this.handleChangeRememberMe}
                   />
                 }
@@ -120,6 +132,13 @@ class SignIn extends React.Component {
               </Button>
             </form>
           </Paper>
+
+          <MessageBar
+            open={!!message.text}
+            variant={message.variant}
+            message={message.text}
+            onClose={this.handleMessageClose}
+          />
         </main>
       </React.Fragment>
     );
@@ -140,8 +159,22 @@ class SignIn extends React.Component {
         this.props.history.push('/')
       ))
       .catch((error) => (
-        console.error(error)
+        this.setState({
+          message: {
+            text: error.message,
+            variant: MESSAGE_TYPES.error
+          }
+        })
       ))
+  }
+
+  handleMessageClose = (event) => {
+    this.setState({
+      message: {
+        text: '',
+        variant: MESSAGE_TYPES.error
+      }
+    })
   }
 }
 

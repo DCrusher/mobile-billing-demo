@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { observable, action } from 'mobx';
 
-export default class AuthStore {
+class AuthStore {
   @observable jwt = {};
   @observable errors = [];
 
@@ -46,3 +46,5 @@ export default class AuthStore {
     })
   }
 }
+
+export default new AuthStore();

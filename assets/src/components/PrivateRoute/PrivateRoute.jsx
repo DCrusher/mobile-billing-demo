@@ -13,4 +13,3 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
 }
 
 export default inject("auth")(observer(PrivateRoute))
-// export default PrivateRoute

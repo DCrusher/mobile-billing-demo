@@ -43,10 +43,11 @@ module.exports.routes = {
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
-  'PUT   /api/v1/entrance/login':                   { action: 'entrance/login' },
-  'GET   /api/v1/operators':                        'OperatorController.index'
+  'PUT   /api/v1/entrance/login':  { action: 'entrance/login' },
+  'GET   /api/v1/operators':       'OperatorController.index',
+  'POST  /api/v1/payments':        'PaymentController.pay'
 
-
+  
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
