@@ -56,8 +56,7 @@ const styles = theme => ({
 
 class RefillFrom extends React.Component {
   state = {
-    // number: '(8   )    -    ',
-    number: '(8919) 146-3357',
+    number: '(8   )    -    ',
     amount: '20',
     message: {
       text: '',
