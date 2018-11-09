@@ -251,7 +251,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://pure-refuge-72288.herokuapp.com/'
+      'https://pure-refuge-72288.herokuapp.com'
     ],
 
 
