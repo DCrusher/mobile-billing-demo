@@ -36,9 +36,6 @@ module.exports.security = {
     allowRequestHeaders: '*'
   },
 
-  sockets: {
-    allowOrigins: '*',
-  },
   /****************************************************************************
   *                                                                           *
   * CSRF protection should be enabled for this application.                   *
