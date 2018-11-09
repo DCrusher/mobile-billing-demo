@@ -53,6 +53,7 @@
     "start": "npm-run-all --parallel open:client lift",
     "start:debug": "npm-run-all --parallel open:client debug",
     "open:client": "webpack-dev-server --mode development",
+    "lift:deploy": "npm-run-all --serial build:dev lift",
     "build": "npm run build:prod",
     "build:dev": "webpack --mode development",
     "build:prod": "webpack --mode production",
