@@ -9,6 +9,14 @@ seed initial data on the project's folder:
 
 `sails run init-populate`
 
+### Credentials after populating
+- login: `ivanov@gmail.com`
+- password: `ivanov`
+
+### Important folders of the project
+1. api - the main part of the backend;
+2. assets/src - the frontend part.
+
 ### Starting project
 1. Start back and front part in parallel: `npm start`
 2. Start only back: `sails lift`
