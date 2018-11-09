@@ -5,7 +5,8 @@ module.exports = {
     entry: './assets/src/index.jsx'
   },
   output: {
-    path: __dirname + '/.tmp/public',
+    // path: __dirname + '/.tmp/public',
+    path: __dirname + '/views/pages',
     filename: 'bundle.js'
   },
   module: {
