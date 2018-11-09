@@ -16,6 +16,7 @@ seed initial data on the project's folder:
 ### Important folders of the project
 1. api - the main part of the backend;
 2. assets/src - the frontend part.
+3. ./refactoring.js - part 1 of the test task (refactoring of the function)
 
 ### Starting project
 1. Start back and front part in parallel: `npm start`
