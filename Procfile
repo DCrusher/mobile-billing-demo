@@ -1,2 +1,1 @@
-back: npm run lift
-web: npm run open:client
+web: npm run lift
